@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dog Login Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Load React and Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    /* Global body styles with a dog image as background */
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: url('https://placedog.net/1600/900') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+    }
+
+    /* Login container positioned at the bottom of the page */
+    .login-container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      width: 320px;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .login-container h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    /* Dog nose input fields */
+    .dog-input {
+      background: url('https://source.unsplash.com/60x60/?dog,nose') no-repeat center left;
+      background-size: 40px 40px;
+      padding-left: 50px;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #aaa;
+      border-radius: 50px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    /* Login button */
+    .login-button {
+      background-color: #ffcc00;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .login-button:hover {
+      background-color: #ff9900;
+    }
+
+    /* Error message */
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* Animated dog */
+    .dog-container {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+    }
+
+    .dog-container img {
+      width: 100%;
+      transition: transform 0.3s;
+    }
+
+    /* Dog shaking head */
+    .shake {
+      animation: shake 0.3s ease-in-out 2;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0); }
+      25% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+      75% { transform: rotate(-10deg); }
+    }
+
+    /* Dog wagging tail */
+    .wag {
+      animation: wag-tail 0.5s infinite;
+    }
+
+    @keyframes wag-tail {
+      0% { transform: rotate(0); }
+      50% { transform: rotate(10deg); }
+      100% { transform: rotate(0); }
+    }
+
+    /* Thank you message */
+    .thanku-message {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function DogLogin() {
+      const [username, setUsername] = React.useState('');
+      const [password, setPassword] = React.useState('');
+      const [error, setError] = React.useState('');
+      const [isWagging, setIsWagging] = React.useState(false);
+      const [isShaking, setIsShaking] = React.useState(false);
+      const [loggedIn, setLoggedIn] = React.useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (username === "doggo" && password === "woofwoof") {
+          setError('');
+          setIsWagging(true);
+          setTimeout(() => setLoggedIn(true), 1000);
+        } else {
+          setError('Woof! Incorrect username or password.');
+          setIsShaking(true);
+          setTimeout(() => setIsShaking(false), 600);
+        }
+      };
+
+      return (
+        <div className="login-container">
+          {/* Animated Dog Image */}
+          <div className="dog-container">
+            
+          </div>
+
+          <h2>Doggy Login</h2>
+
+          {!loggedIn ? (
+            <form onSubmit={handleSubmit}>
+              <input 
+                type="text" 
+                className="dog-input" 
+                placeholder="Dog's Username" 
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              /><br/>
+
+              <input 
+                type="password" 
+                className="dog-input" 
+                placeholder="Dog's Password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              /><br/>
+
+              <button type="submit" className="login-button">Login</button>
+
+              {error && <div className="error-message">{error}</div>}
+            </form>
+          ) : (
+            <div className="thanku-message">Thanku Bunti! 🐶</div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<DogLogin />);
+  </script>
+</body>
+</html>
